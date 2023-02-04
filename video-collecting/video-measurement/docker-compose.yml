@@ -1,0 +1,30 @@
+version: '3'
+services:
+  download-server:
+    build: ./extractServer
+    ports:
+      #- 4322:4322 # http server
+      #- 4321:4321 # subscribe tcp server
+      - 8070:8080 # ipfs gateway
+      - 5001:5001 # ipfs http RPC
+      - 4001:4001
+      - 29998:29998
+    cap_add:
+      - ALL
+    privileged: true
+    environment:
+      - IPFS_GATEWAY_URL=http://download-server:8080
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./out/:/out/
+      - ./out-log/:/log-output/
+      #- ./files/:/out/
+      #- ./log/:/log_output/
+    #healthcheck:
+      #test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      #interval: 30s
+      #timeout: 10s
+      #retries: 5
+    restart: unless-stopped
