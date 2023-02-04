@@ -1,2 +1,2 @@
 # Telescope
-Smart ABR for IPFS
+Smart ABR for InterPlanetary File System (IPFS)
